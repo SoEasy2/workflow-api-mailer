@@ -3,16 +3,16 @@ import { EventPattern, MessagePattern, Payload, RpcException } from '@nestjs/mic
 import { IKafkaMessage } from '../common/interfaces/kafka-message.interface';
 import { TOPIC_MAILER_SEND } from '../common/constants';
 import { AppLogger } from '../shared/logger/logger.service';
-import { MaileService } from './maile.service';
+import { MailService } from './mail.service';
 
 @Controller('mailer')
 export class MaileController {
     constructor(
-        private readonly mailerService: MaileService,
+        private readonly mailerService: MailService,
         private readonly appLogger: AppLogger,
     ) {}
 
-    @MessagePattern(TOPIC_MAILER_SEND)
+    @EventPattern(TOPIC_MAILER_SEND)
     async sendMail(@Payload() message: IKafkaMessage<any>) {
         try {
             this.appLogger.log(
@@ -27,11 +27,5 @@ export class MaileController {
             );
             throw new RpcException(JSON.stringify(err));
         }
-    }
-    @EventPattern(TOPIC_MAILER_SEND)
-    async logSendMail(): Promise<void> {
-        this.appLogger.log(
-            `[MaileController][${TOPIC_MAILER_SEND}][SEND] -> [sendMail]`,
-        );
     }
 }

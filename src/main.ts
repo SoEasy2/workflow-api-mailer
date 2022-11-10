@@ -12,7 +12,7 @@ async function bootstrap() {
         options: {
           client: {
             brokers: ['kafka:9092'],
-            clientId: 'mailer-service',
+            clientId: 'mail-service',
           },
           consumer: {
             groupId: `mailer-consumer-${uuidv4()}`,

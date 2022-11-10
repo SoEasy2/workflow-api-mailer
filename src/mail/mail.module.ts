@@ -1,9 +1,11 @@
 import { Module } from '@nestjs/common';
-import { MaileController } from './maile.controller';
-import { MaileService } from './maile.service';
+import { MaileController } from './mail.controller';
+import { MailService } from './mail.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppLogger } from '../shared/logger/logger.service';
+import { join } from 'path';
+import { HandlebarsAdapter } from "@nestjs-modules/mailer/dist/adapters/handlebars.adapter";
 
 @Module({
   imports: [
@@ -28,10 +30,13 @@ import { AppLogger } from '../shared/logger/logger.service';
                           accessUrl: configService.get('smtp.auth.accessUrl'),
                       },
                   },
-                  // template: {
-                  //     dir: `${process.cwd()}/templates/`,
-                  //     adapter: new PugAdapter(),
-                  // },
+                  template: {
+                      dir: join(__dirname, 'templates'),
+                      adapter: new HandlebarsAdapter(),
+                      options: {
+                          strict: true,
+                      },
+                  }
               };
           },
           inject: [ConfigService],
@@ -39,6 +44,6 @@ import { AppLogger } from '../shared/logger/logger.service';
       ConfigModule
   ],
   controllers: [MaileController],
-  providers: [MaileService, AppLogger]
+  providers: [MailService, AppLogger]
 })
-export class MaileModule {}
+export class MailModule {}

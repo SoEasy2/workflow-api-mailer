@@ -1,1 +1,1 @@
-export const TOPIC_MAILER_SEND = 'mailer.send';
+export const TOPIC_MAILER_SEND = 'mail.send';
