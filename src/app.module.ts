@@ -12,10 +12,10 @@ import configuration from './config';
       load: [configuration],
     }),
     LoggerModule,
-    MailModule
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
-  exports: [ConfigModule]
+  exports: [ConfigModule],
 })
 export class AppModule {}

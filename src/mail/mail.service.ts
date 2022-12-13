@@ -5,24 +5,24 @@ import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class MailService {
-    constructor(
-        private readonly mailerService: MailerService,
-        private configService: ConfigService,
-    ) {}
-    async send(message: any) {
-           const { code } = message;
-           if (!code) {
-               throw new RpcException('Code is required');
-           }
-           return this.mailerService.sendMail({
-               from: this.configService.get<string>('smtp.auth.user'),
-               to: "roman.stasenok123@mail.ru",
-               text: "Welcome to the app",
-               subject: "RegistrationMobile",
-               template: "./registration",
-               context: {
-                   code,
-               }
-           })
+  constructor(
+    private readonly mailerService: MailerService,
+    private configService: ConfigService,
+  ) {}
+  async send(message: any) {
+    const { code } = message;
+    if (!code) {
+      throw new RpcException('Code is required');
     }
+    return this.mailerService.sendMail({
+      from: this.configService.get<string>('smtp.auth.user'),
+      to: 'roman.stasenok123@mail.ru',
+      text: 'Welcome to the app',
+      subject: 'RegistrationMobile',
+      template: './registration',
+      context: {
+        code,
+      },
+    });
+  }
 }

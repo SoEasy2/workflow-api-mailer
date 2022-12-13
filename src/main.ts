@@ -6,20 +6,20 @@ import { ExceptionFilter } from './exceptions/rpc-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-      AppModule,
-      {
-        transport: Transport.KAFKA,
-        options: {
-          client: {
-            brokers: ['kafka:9092'],
-            clientId: 'mail-service',
-          },
-          consumer: {
-            groupId: `mailer-consumer-${uuidv4()}`,
-            allowAutoTopicCreation: true,
-          },
+    AppModule,
+    {
+      transport: Transport.KAFKA,
+      options: {
+        client: {
+          brokers: ['kafka:9092'],
+          clientId: 'mail-service',
+        },
+        consumer: {
+          groupId: `mailer-consumer-${uuidv4()}`,
+          allowAutoTopicCreation: true,
         },
       },
+    },
   );
 
   app.useGlobalFilters(new ExceptionFilter());
@@ -29,5 +29,5 @@ async function bootstrap() {
   await app.listen();
 }
 bootstrap().then(() => {
-    console.log('Mailer service is running');
+  console.log('Mailer service is running');
 });
