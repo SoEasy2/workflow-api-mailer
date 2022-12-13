@@ -1,9 +1,5 @@
 import { Controller } from '@nestjs/common';
-import {
-  EventPattern,
-  Payload,
-  RpcException,
-} from '@nestjs/microservices';
+import { EventPattern, Payload, RpcException } from '@nestjs/microservices';
 import { IKafkaMessage } from '../common/interfaces/kafka-message.interface';
 import { TOPIC_MAILER_SEND } from '../common/constants';
 import { AppLogger } from '../shared/logger/logger.service';
