@@ -10,7 +10,6 @@ export class MailService {
         private configService: ConfigService,
     ) {}
     async send(message: any) {
-       try{
            const { code } = message;
            if (!code) {
                throw new RpcException('Code is required');
@@ -19,14 +18,11 @@ export class MailService {
                from: this.configService.get<string>('smtp.auth.user'),
                to: "roman.stasenok123@mail.ru",
                text: "Welcome to the app",
-               subject: "Registration",
+               subject: "RegistrationMobile",
                template: "./registration",
                context: {
                    code,
                }
            })
-       } catch (e) {
-           throw new RpcException(JSON.stringify(e))
-       }
     }
 }
